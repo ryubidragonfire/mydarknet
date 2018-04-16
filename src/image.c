@@ -141,6 +141,8 @@ void draw_box(image a, int x1, int y1, int x2, int y2, float r, float g, float b
     if(y2 < 0) y2 = 0;
     if(y2 >= a.h) y2 = a.h-1;
 
+    //printf("in draw_box() x1:%d y1:%d x2:%d y2:%d a.w:%d a.h:%d\n", x1, y1, x2, y2, a.w, a.h);
+    
     for(i = x1; i <= x2; ++i){
         a.data[i + y1*a.w + 0*a.w*a.h] = r;
         a.data[i + y2*a.w + 0*a.w*a.h] = r;
@@ -166,6 +168,9 @@ void draw_box(image a, int x1, int y1, int x2, int y2, float r, float g, float b
 void draw_box_width(image a, int x1, int y1, int x2, int y2, int w, float r, float g, float b)
 {
     int i;
+
+    //printf("in draw_box_width() x1:%d y1:%d x2:%d y2:%d w:%d\n", x1, y1, x2, y2, w);
+        
     for(i = 0; i < w; ++i){
         draw_box(a, x1+i, y1+i, x2-i, y2-i, r, g, b);
     }
@@ -180,6 +185,7 @@ void draw_bbox(image a, box bbox, int w, float r, float g, float b)
 
     int i;
     for(i = 0; i < w; ++i){
+        //printf("in draw_bbox() lef:%d right:%d top:%d bot:%d\n", left, right, top, bot);
         draw_box(a, left+i, top+i, right-i, bot-i, r, g, b);
     }
 }
@@ -217,7 +223,7 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
 					strcat(labelstr, ", ");
 					strcat(labelstr, names[j]);
 				}
-				printf("%s: %.0f%%\n", names[j], dets[i].prob[j] * 100);
+				printf("in draw_detections_v3() %s: %.0f%%\n", names[j], dets[i].prob[j] * 100);
 			}
 		}
 		if (class_id >= 0) {
@@ -243,7 +249,7 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
 			rgb[1] = green;
 			rgb[2] = blue;
 			box b = dets[i].bbox;
-			//printf("%f %f %f %f\n", b.x, b.y, b.w, b.h);
+			//printf("in draw_detections_v3() %d %d %d %d\n", b.x, b.y, b.w, b.h);
 
 			int left = (b.x - b.w / 2.)*im.w;
 			int right = (b.x + b.w / 2.)*im.w;
@@ -254,6 +260,8 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
 			if (right > im.w - 1) right = im.w - 1;
 			if (top < 0) top = 0;
 			if (bot > im.h - 1) bot = im.h - 1;
+
+            printf("in draw_detections_v3() left:%d right:%d top:%d bot:%d\n", left, right, top, bot);
 
 			//int b_x_center = (left + right) / 2;
 			//int b_y_center = (top + bot) / 2;
@@ -387,7 +395,7 @@ void draw_detections_cv_v3(IplImage* show_img, detection *dets, int num, float t
 			rgb[1] = green;
 			rgb[2] = blue;
 			box b = dets[i].bbox;
-			//printf("%f %f %f %f\n", b.x, b.y, b.w, b.h);
+			printf("%f %f %f %f\n", b.x, b.y, b.w, b.h);
 
 			int left = (b.x - b.w / 2.)*show_img->width;
 			int right = (b.x + b.w / 2.)*show_img->width;
