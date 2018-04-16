@@ -3,7 +3,9 @@
 *.csv
 *.out
 *.png
+*.jpg
 *.so
+backup/
 mnist/
 data/
 caffe/
