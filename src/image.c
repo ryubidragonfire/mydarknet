@@ -209,7 +209,13 @@ image **load_alphabet()
 void draw_detections_v3(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
 {
 	int i, j;
-
+    printf("FILE OPEN\n");
+    printf("i:%d j:%d num:%d\n", i, j, num);
+    FILE *f = fopen("./out/output.txt", "w");
+    if (f == NULL){
+        printf("Error opening output file!\n");
+        exit(1);
+    }
 	for (i = 0; i < num; ++i) {
 		char labelstr[4096] = { 0 };
 		int class_id = -1;
@@ -223,7 +229,8 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
 					strcat(labelstr, ", ");
 					strcat(labelstr, names[j]);
 				}
-				printf("in draw_detections_v3() %s: %.0f%%\n", names[j], dets[i].prob[j] * 100);
+				printf("In draw_detections_v3() %s: %.0f%%\n", names[j], dets[i].prob[j] * 100);
+                fprintf(f, "%s %f ", names[j], dets[i].prob[j]);
 			}
 		}
 		if (class_id >= 0) {
@@ -262,7 +269,7 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
 			if (bot > im.h - 1) bot = im.h - 1;
 
             printf("in draw_detections_v3() left:%d right:%d top:%d bot:%d\n", left, right, top, bot);
-
+            fprintf(f, "%d %d %d %d\n", left, right, top, bot );
 			//int b_x_center = (left + right) / 2;
 			//int b_y_center = (top + bot) / 2;
 			//int b_width = right - left;
@@ -286,6 +293,8 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
 			}
 		}
 	}
+    fclose(f);
+    printf("FILE CLOSE\n");
 }
 
 void draw_detections(image im, int num, float thresh, box *boxes, float **probs, char **names, image **alphabet, int classes)
