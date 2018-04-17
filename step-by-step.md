@@ -22,10 +22,28 @@ DEBUG=1 to bould debug version of Yolo
 make
 ```
 
+### Using darknet - yolov3
 - Download yolov3.weights in `build/darknet/x64/` 
 
 `wget https://pjreddie.com/media/files/yolov3.weights`
 
-- Check that it works. CD to `darknet/`
+- Detect on a single image
 
 `./darknet detector test build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg  build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 build/darknet/x64/data/dog.jpg`
+
+  - to turn off display window
+  
+  `./darknet detector test build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg  build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 build/darknet/x64/data/dog.jpg -dont_show`
+
+- Detect on a video
+
+`./darknet detector demo build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 data/toy-car.mp4`
+
+  - to turn off display window
+  
+  ` ./darknet detector demo build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 data/toy-car.mp4 -out_filename data/predicted-toy-car.avi -dont_show`
+
+  - to save predicted video
+  
+  `./darknet detector demo build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 data/toy-car.mp4 -out_filename data/predicted-toy-car.avi`
+  
