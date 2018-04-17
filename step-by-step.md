@@ -5,7 +5,7 @@ YOLOv3 is tested on AZURE LINUX DLVM, with YOLOV3
 
 ref: https://github.com/AlexeyAB/darknet
 
-### compile in linux
+### 1. compile in linux
 - git clone https://github.com/AlexeyAB/darknet.git
 
 - In `darknet\Makefile`, change:
@@ -22,28 +22,28 @@ DEBUG=1 to bould debug version of Yolo
 make
 ```
 
-### Using darknet - yolov3
+### 2. Using darknet - yolov3
 - Download yolov3.weights in `build/darknet/x64/` 
 
 `wget https://pjreddie.com/media/files/yolov3.weights`
 
-- Detect on a single image
+#### 2.1. Detect on a single image
 
 `./darknet detector test build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg  build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 build/darknet/x64/data/dog.jpg`
 
-  - to turn off display window
+- to turn off display window
   
   `./darknet detector test build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg  build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 build/darknet/x64/data/dog.jpg -dont_show`
 
-- Detect on a video
+#### 2.2. Detect on a video
 
 `./darknet detector demo build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 data/toy-car.mp4`
 
-  - to turn off display window
+- to turn off display window
   
   ` ./darknet detector demo build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 data/toy-car.mp4 -out_filename data/predicted-toy-car.avi -dont_show`
 
-  - to save predicted video
+- to save predicted video
   
   `./darknet detector demo build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 data/toy-car.mp4 -out_filename data/predicted-toy-car.avi`
   
