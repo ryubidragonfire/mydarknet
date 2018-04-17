@@ -16,6 +16,22 @@ Based on `void draw_detections_cv_v3(IplImage* show_img, detection *dets, int nu
 
 `draw_detections_cv_v3()` and `draw_detections_cv_v3_and_write_to_txt()` are used in `demo.c` to predict on video.
 
+- `demo.c`
+In `demo.c`, where first frame is denoted `#0`,
+
+``` c
+if (output_video_writer && show_img) {
+   frame_count++;
+   cvWriteFrame(output_video_writer, show_img);
+   printf("\n cvWriteFrame \n");
+   printf("frame_count: %d \n", frame_count);
+}
+```
+The original code above only writes out frame `#2` to `#(lastframe-2)`. This can be shown by printing out `frame_count`.
+
+The added function `draw_detections_cv_v3_and_write_to_txt()` writes out `#1` to `#lastframe`
+
+
 # To Do
 ## Log file for training and validation loss
 
