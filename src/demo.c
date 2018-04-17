@@ -115,10 +115,13 @@ void *detect_in_thread(void *ptr)
 	ipl_images[demo_index] = det_img;
 	det_img = ipl_images[(demo_index + FRAMES / 2 + 1) % FRAMES];
     demo_index = (demo_index + 1)%FRAMES;
-	    
-	//draw_detections(det, l.w*l.h*l.n, demo_thresh, boxes, probs, demo_names, demo_alphabet, demo_classes);
-	draw_detections_cv_v3(det_img, dets, nboxes, demo_thresh, demo_names, demo_alphabet, demo_classes);
-	//draw_detections_cv(det_img, l.w*l.h*l.n, demo_thresh, boxes, probs, demo_names, demo_alphabet, demo_classes);
+	
+    //draw_detections(det, l.w*l.h*l.n, demo_thresh, boxes, probs, demo_names, demo_alphabet, demo_classes);
+    //draw_detections_cv_v3(det_img, dets, nboxes, demo_thresh, demo_names, demo_alphabet, demo_classes);
+	draw_detections_cv_v3_and_write_to_txt(det_img, dets, nboxes, demo_thresh, demo_names, demo_alphabet, demo_classes);
+	//printf("global_video_frame_number :%d\n", global_video_frame_number);
+    global_video_frame_number = global_video_frame_number + 1;
+    //draw_detections_cv(det_img, l.w*l.h*l.n, demo_thresh, boxes, probs, demo_names, demo_alphabet, demo_classes);
 	free(dets);
 
 	return 0;
@@ -136,6 +139,7 @@ double get_wall_time()
 void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int cam_index, const char *filename, char **names, int classes,
 	int frame_skip, char *prefix, char *out_filename, int http_stream_port, int dont_show)
 {
+    //printf("out_filename %s\n", out_filename);
     //skip = frame_skip;
     image **alphabet = load_alphabet();
     int delay = frame_skip;
@@ -189,7 +193,8 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
     det_s = in_s;
 
     fetch_in_thread(0);
-    detect_in_thread(0);
+    detect_in_thread(0); 
+    printf("detect_in_thread(0) in line 109 in demo()\n");
     disp = det;
 	det_img = in_img;
     det = in;
@@ -198,6 +203,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
     for(j = 0; j < FRAMES/2; ++j){
         fetch_in_thread(0);
         detect_in_thread(0);
+        printf("detect_in_thread(0) in line 205 in demo() \n");
         disp = det;
 		det_img = in_img;
         det = in;
@@ -228,9 +234,13 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
 	}
 
     double before = get_wall_time();
+    int frame_count = 0;
+
+    // Write frame number, predicted classes and bboxes to a file
 
     while(1){
         ++count;
+        //printf("count: %d \n");
         if(1){
             if(pthread_create(&fetch_thread, 0, fetch_in_thread, 0)) error("Thread creation failed");
             if(pthread_create(&detect_thread, 0, detect_in_thread, 0)) error("Thread creation failed");
@@ -262,9 +272,12 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
 			}
 
 			// save video file
+            
 			if (output_video_writer && show_img) {
+                frame_count++;
 				cvWriteFrame(output_video_writer, show_img);
 				printf("\n cvWriteFrame \n");
+                printf("frame_count: %d \n", frame_count);
 			}
 
 			cvReleaseImage(&show_img);
@@ -288,6 +301,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
             det   = in;
             det_s = in_s;
             detect_in_thread(0);
+            printf("detect_in_thread(0) in line 305");
             if(delay == 0) {
                 free_image(disp);
                 disp = det;
