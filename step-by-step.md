@@ -1,5 +1,5 @@
 # QUICK START FOR USING DARKNET's YOLOV3
-YOLOv3 is tested on AZURE LINUX DLVM, with YOLOV3
+The following are tested on AZURE LINUX DLVM, with YOLOV3
 
 ## Step by step
 
