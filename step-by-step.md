@@ -47,3 +47,11 @@ make
   
   `./darknet detector demo build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 data/toy-car.mp4 -out_filename data/predicted-toy-car.avi`
   
+##### 2.2.1. View .avi using VLC
+- to install
+
+```
+% sudo apt-get update
+% sudo apt-get install vlc browser-plugin-vlc
+```
+  
