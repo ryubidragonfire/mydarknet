@@ -1,0 +1,12 @@
+{
+    "predictions": [
+        {
+            "class": "diningtable",
+            "prob": 0.887747,
+            "left": 103,
+            "top": 95,
+            "right": 1783,
+            "bot": 1004
+        }
+    ]
+}

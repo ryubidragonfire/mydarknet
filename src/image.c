@@ -22,6 +22,11 @@
 #include "http_stream.h"
 #endif
 
+// specific to jWrite.c and jWrite.h
+#define _CRT_SECURE_NO_WARNINGS			// stop complaining about deprecated functions
+#include "jWrite.h"
+// END specific to jWrite.c and jWrite.h
+
 int global_video_frame_number = 0;
 
 int windows = 0;
@@ -187,7 +192,7 @@ void draw_bbox(image a, box bbox, int w, float r, float g, float b)
 
     int i;
     for(i = 0; i < w; ++i){
-        //printf("in draw_bbox() lef:%d right:%d top:%d bot:%d\n", left, right, top, bot);
+        //printf("in draw_bbox() lef:%d top:%d right:%d bot:%d\n", left, top, right, bot);
         draw_box(a, left+i, top+i, right-i, bot-i, r, g, b);
     }
 }
@@ -270,8 +275,8 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
 			if (top < 0) top = 0;
 			if (bot > im.h - 1) bot = im.h - 1;
 
-            printf("left:%d right:%d top:%d bot:%d\n", left, right, top, bot);
-            fprintf(f, "%d %d %d %d\n", left, right, top, bot );
+            printf("left:%d top:%d right:%d bot:%d\n", left, top, right, bot);
+            fprintf(f, "%d %d %d %d\n", left, top, right, bot);
 			//int b_x_center = (left + right) / 2;
 			//int b_y_center = (top + bot) / 2;
 			//int b_width = right - left;
@@ -295,6 +300,118 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
 			}
 		}
 	}
+    fclose(f);
+    printf("FILE CLOSE\n");
+}
+
+void draw_detections_v3_write_to_json(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
+{
+	int i, j;
+    char buffer[1024];
+	unsigned int buflen= 1024;
+	int err;
+    struct jWriteControl jwc;
+    
+    printf("i:%d j:%d num:%d\n", i, j, num);
+    
+    // Open a file to write out
+    printf("OPEN FILE \n");
+    FILE *f = fopen("./out/output.json", "w");
+    if (f == NULL){
+        printf("Error opening output file!\n");
+        exit(1);
+    }
+
+    // open a jWrite object to write json to
+    jwOpen(buffer, buflen, JW_OBJECT, JW_PRETTY);		// start root object
+    jwObj_array("predictions");  // start "anArray": [...] 
+    
+	for (i = 0; i < num; ++i) {
+		char labelstr[4096] = { 0 };
+		int class_id = -1;
+		for (j = 0; j < classes; ++j) {
+			if (dets[i].prob[j] > thresh) {
+				if (class_id < 0) {
+					strcat(labelstr, names[j]);
+					class_id = j;
+				}
+				else {
+					strcat(labelstr, ", ");
+					strcat(labelstr, names[j]);
+				}
+				printf("%s: %.0f%%\n", names[j], dets[i].prob[j] * 100);
+                jwArr_object(); // object in array "predictions"
+                    jwObj_string("class", names[j] ); // add object class: predicted class
+	                jwObj_double("prob", dets[i].prob[j] ); // prob: probability
+			}
+		}
+		if (class_id >= 0) {
+			int width = im.h * .006;
+
+			/*
+			if(0){
+			width = pow(prob, 1./2.)*10+1;
+			alphabet = 0;
+			}
+			*/
+
+			//printf("%d %s: %.0f%%\n", i, names[class_id], prob*100);
+			int offset = class_id * 123457 % classes;
+			float red = get_color(2, offset, classes);
+			float green = get_color(1, offset, classes);
+			float blue = get_color(0, offset, classes);
+			float rgb[3];
+
+			//width = prob*20+2;
+
+			rgb[0] = red;
+			rgb[1] = green;
+			rgb[2] = blue;
+			box b = dets[i].bbox;
+			//printf("%d %d %d %d\n", b.x, b.y, b.w, b.h);
+
+			int left = (b.x - b.w / 2.)*im.w;
+			int right = (b.x + b.w / 2.)*im.w;
+			int top = (b.y - b.h / 2.)*im.h;
+			int bot = (b.y + b.h / 2.)*im.h;
+
+			if (left < 0) left = 0;
+			if (right > im.w - 1) right = im.w - 1;
+			if (top < 0) top = 0;
+			if (bot > im.h - 1) bot = im.h - 1;
+
+            printf("left:%d top:%d  right:%d bot:%d\n", left, top, right, bot);
+            jwObj_int("left", left );
+            jwObj_int("top", top );
+            jwObj_int("right", right );
+            jwObj_int("bot", bot );
+            jwEnd();
+			//int b_x_center = (left + right) / 2;
+			//int b_y_center = (top + bot) / 2;
+			//int b_width = right - left;
+			//int b_height = bot - top;
+			//sprintf(labelstr, "%d x %d - w: %d, h: %d", b_x_center, b_y_center, b_width, b_height);
+
+			draw_box_width(im, left, top, right, bot, width, red, green, blue);
+			if (alphabet) {
+				image label = get_label_v3(alphabet, labelstr, (im.h*.03));
+				draw_label(im, top + width, left, label, rgb);
+				free_image(label);
+			}
+			if (dets[i].mask) {
+				image mask = float_to_image(14, 14, 1, dets[i].mask);
+				image resized_mask = resize_image(mask, b.w*im.w, b.h*im.h);
+				image tmask = threshold_image(resized_mask, .5);
+				embed_image(tmask, im, left, top);
+				free_image(mask);
+				free_image(resized_mask);
+				free_image(tmask);
+			}
+		}
+	}
+    jwEnd(); // end the array
+    err= jwClose(); // close jWrite object
+    fprintf(f, "%s\n", buffer);
     fclose(f);
     printf("FILE CLOSE\n");
 }
@@ -418,8 +535,8 @@ void draw_detections_cv_v3(IplImage* show_img, detection *dets, int num, float t
 			if (top < 0) top = 0;
 			if (bot > show_img->height - 1) bot = show_img->height - 1;
 
-            printf("left:%d right:%d top:%d bot:%d\n", left, right, top, bot);
-            //fprintf(f, "%d %d %d %d\n", left, right, top, bot );
+            printf("left:%d top:%d right:%d bot:%d\n", left, top, right, bot);
+            //fprintf(f, "%d %d %d %d\n", left, top, right, bot );
 			
 			//int b_x_center = (left + right) / 2;
 			//int b_y_center = (top + bot) / 2;
@@ -445,7 +562,7 @@ void draw_detections_cv_v3(IplImage* show_img, detection *dets, int num, float t
 			color.val[2] = blue * 256;
 
 			cvRectangle(show_img, pt1, pt2, color, width, 8, 0);
-			//printf("left=%d, right=%d, top=%d, bottom=%d, obj_id=%d, obj=%s \n", left, right, top, bot, class_id, names[class_id]);
+			//printf("left=%d, top=%d, right=%d, bot=%d, obj_id=%d, obj=%s \n", left, top, right, bot, class_id, names[class_id]);
 			cvRectangle(show_img, pt_text_bg1, pt_text_bg2, color, width, 8, 0);
 			cvRectangle(show_img, pt_text_bg1, pt_text_bg2, color, CV_FILLED, 8, 0);	// filled
 			CvScalar black_color;
@@ -457,7 +574,7 @@ void draw_detections_cv_v3(IplImage* show_img, detection *dets, int num, float t
 	}
 }
 
-void draw_detections_cv_v3_and_write_to_txt(IplImage* show_img, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
+void draw_detections_cv_v3_write_to_txt(IplImage* show_img, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
 {
     char outfname[128];
 	int i, j; 
@@ -525,8 +642,8 @@ void draw_detections_cv_v3_and_write_to_txt(IplImage* show_img, detection *dets,
 			if (top < 0) top = 0;
 			if (bot > show_img->height - 1) bot = show_img->height - 1;
 
-            printf("left:%d right:%d top:%d bot:%d\n", left, right, top, bot);
-            fprintf(f, "%d %d %d %d\n", left, right, top, bot );
+            printf("left:%d top:%d right:%d bot:%d\n", left, top, right, bot);
+            fprintf(f, "%d %d %d %d\n", left, top, right, bot);
 			
 			//int b_x_center = (left + right) / 2;
 			//int b_y_center = (top + bot) / 2;
@@ -552,7 +669,7 @@ void draw_detections_cv_v3_and_write_to_txt(IplImage* show_img, detection *dets,
 			color.val[2] = blue * 256;
 
 			cvRectangle(show_img, pt1, pt2, color, width, 8, 0);
-			//printf("left=%d, right=%d, top=%d, bottom=%d, obj_id=%d, obj=%s \n", left, right, top, bot, class_id, names[class_id]);
+			//printf("left=%d, top=%d, right=%d, bot=%d, obj_id=%d, obj=%s \n", left, top, right, bot, class_id, names[class_id]);
 			cvRectangle(show_img, pt_text_bg1, pt_text_bg2, color, width, 8, 0);
 			cvRectangle(show_img, pt_text_bg1, pt_text_bg2, color, CV_FILLED, 8, 0);	// filled
 			CvScalar black_color;
@@ -562,6 +679,134 @@ void draw_detections_cv_v3_and_write_to_txt(IplImage* show_img, detection *dets,
 			cvPutText(show_img, labelstr, pt_text, &font, black_color);
 		}
 	}
+    fclose(f);
+    printf("FILE CLOSE\n");
+}
+
+void draw_detections_cv_v3_write_to_json(IplImage* show_img, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
+{
+    char outfname[128];
+	int i, j; 
+	char buffer[1024];
+	unsigned int buflen= 1024;
+	int err;
+    struct jWriteControl jwc;
+    
+    if (!show_img) return;
+    //printf("global_video_frame_number :%d \n", global_video_frame_number);
+    printf("FILE OPEN\n");
+    //printf("i:%d j:%d num:%d\n", i, j, num);
+    snprintf(outfname, 128, "./out/predicted_toy_car_%04d", global_video_frame_number);
+    strcat(outfname, ".json");
+    printf("outfname :%s \n", outfname);
+    FILE *f = fopen(outfname, "w");
+    if (f == NULL){
+        printf("Error opening output file!\n");
+        exit(1);
+    }
+
+    // open a jWrite object to write json to
+    jwOpen(buffer, buflen, JW_OBJECT, JW_PRETTY);		// start root object
+    jwObj_array("predictions");  // start "anArray": [...] 
+
+	for (i = 0; i < num; ++i) {
+		char labelstr[4096] = { 0 };
+		int class_id = -1;
+		for (j = 0; j < classes; ++j) {
+			if (dets[i].prob[j] > thresh) {
+				if (class_id < 0) {
+					strcat(labelstr, names[j]);
+					class_id = j;
+				}
+				else {
+					strcat(labelstr, ", ");
+					strcat(labelstr, names[j]);
+				}
+				printf("%s: %.0f%%\n", names[j], dets[i].prob[j] * 100);
+                jwArr_object(); // object in array "predictions"
+                    jwObj_string("class", names[j] ); // add object class: predicted class
+	                jwObj_double("prob", dets[i].prob[j] ); // prob: probability
+			}
+		}
+		if (class_id >= 0) {
+			int width = show_img->height * .006;
+
+			/*
+			if(0){
+			width = pow(prob, 1./2.)*10+1;
+			alphabet = 0;
+			}
+			*/
+
+			//printf("%d %s: %.0f%%\n", i, names[class_id], prob*100);
+			int offset = class_id * 123457 % classes;
+			float red = get_color(2, offset, classes);
+			float green = get_color(1, offset, classes);
+			float blue = get_color(0, offset, classes);
+			float rgb[3];
+
+			//width = prob*20+2;
+
+			rgb[0] = red;
+			rgb[1] = green;
+			rgb[2] = blue;
+			box b = dets[i].bbox;
+			//printf("%f %f %f %f\n", b.x, b.y, b.w, b.h);
+
+			int left = (b.x - b.w / 2.)*show_img->width;
+			int right = (b.x + b.w / 2.)*show_img->width;
+			int top = (b.y - b.h / 2.)*show_img->height;
+			int bot = (b.y + b.h / 2.)*show_img->height;
+
+			if (left < 0) left = 0;
+			if (right > show_img->width - 1) right = show_img->width - 1;
+			if (top < 0) top = 0;
+			if (bot > show_img->height - 1) bot = show_img->height - 1;
+
+            printf("left:%d  top:%d right:%dbot:%d\n", left, top, right, bot);
+            jwObj_int("left", left );
+            jwObj_int("top", top );
+            jwObj_int("right", right );
+            jwObj_int("bot", bot );
+            jwEnd();
+			
+			//int b_x_center = (left + right) / 2;
+			//int b_y_center = (top + bot) / 2;
+			//int b_width = right - left;
+			//int b_height = bot - top;
+			//sprintf(labelstr, "%d x %d - w: %d, h: %d", b_x_center, b_y_center, b_width, b_height);
+
+			float const font_size = show_img->height / 1000.F;
+			CvPoint pt1, pt2, pt_text, pt_text_bg1, pt_text_bg2;
+			pt1.x = left;
+			pt1.y = top;
+			pt2.x = right;
+			pt2.y = bot;
+			pt_text.x = left;
+			pt_text.y = top - 12;
+			pt_text_bg1.x = left;
+			pt_text_bg1.y = top - (10 + 25 * font_size);
+			pt_text_bg2.x = right;
+			pt_text_bg2.y = top;
+			CvScalar color;
+			color.val[0] = red * 256;
+			color.val[1] = green * 256;
+			color.val[2] = blue * 256;
+
+			cvRectangle(show_img, pt1, pt2, color, width, 8, 0);
+			//printf("left=%d, top=%d, right=%d, bottom=%d, obj_id=%d, obj=%s \n", left, top, right, bot, class_id, names[class_id]);
+			cvRectangle(show_img, pt_text_bg1, pt_text_bg2, color, width, 8, 0);
+			cvRectangle(show_img, pt_text_bg1, pt_text_bg2, color, CV_FILLED, 8, 0);	// filled
+			CvScalar black_color;
+			black_color.val[0] = 0;
+			CvFont font;
+			cvInitFont(&font, CV_FONT_HERSHEY_SIMPLEX, font_size, font_size, 0, font_size * 3, 8);
+			cvPutText(show_img, labelstr, pt_text, &font, black_color);
+		}
+	}
+    jwEnd(); // end the array
+    err= jwClose(); // close jWrite object
+    fprintf(f, "%s\n", buffer);
     fclose(f);
     printf("FILE CLOSE\n");
 }
@@ -624,7 +869,7 @@ void draw_detections_cv(IplImage* show_img, int num, float thresh, box *boxes, f
 			color.val[2] = blue * 256;
 
 			cvRectangle(show_img, pt1, pt2, color, width, 8, 0);
-			//printf("left=%d, right=%d, top=%d, bottom=%d, obj_id=%d, obj=%s \n", left, right, top, bot, class_id, names[class_id]);
+			//printf("left=%d, top=%d, right=%d, bot=%d, obj_id=%d, obj=%s \n", left, top, right, bot, class_id, names[class_id]);
 			cvRectangle(show_img, pt_text_bg1, pt_text_bg2, color, width, 8, 0);
 			cvRectangle(show_img, pt_text_bg1, pt_text_bg2, color, CV_FILLED, 8, 0);	// filled
 			CvScalar black_color;

@@ -1,0 +1,6 @@
+{
+    "predictions": [
+        {
+            "class": "car",
+            "prob": 0.711205
+            

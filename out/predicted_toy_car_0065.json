@@ -1,0 +1,28 @@
+{
+    "predictions": [
+        {
+            "class": "car",
+            "prob": 0.972925,
+            "left": 730,
+            "top": 390,
+            "right": 997,
+            "bot": 550
+        },
+        {
+            "class": "diningtable",
+            "prob": 0.336477,
+            "left": 61,
+            "top": 204,
+            "right": 1816,
+            "bot": 1018
+        },
+        {
+            "class": "book",
+            "prob": 0.266907,
+            "left": 0,
+            "top": 334,
+            "right": 165,
+            "bot": 475
+        }
+    ]
+}

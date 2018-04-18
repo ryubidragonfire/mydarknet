@@ -1,0 +1,20 @@
+{
+    "predictions": [
+        {
+            "class": "car",
+            "prob": 0.992438,
+            "left": 812,
+            "top": 328,
+            "right": 1352,
+            "bot": 652
+        },
+        {
+            "class": "diningtable",
+            "prob": 0.692939,
+            "left": 83,
+            "top": 76,
+            "right": 1783,
+            "bot": 1009
+        }
+    ]
+}

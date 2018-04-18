@@ -1,0 +1,28 @@
+{
+    "predictions": [
+        {
+            "class": "dog",
+            "prob": 0.997805,
+            "left": 123,
+            "top": 223,
+            "right": 320,
+            "bot": 543
+        },
+        {
+            "class": "truck",
+            "prob": 0.932984,
+            "left": 474,
+            "top": 86,
+            "right": 690,
+            "bot": 166
+        },
+        {
+            "class": "bicycle",
+            "prob": 0.989617,
+            "left": 118,
+            "top": 124,
+            "right": 568,
+            "bot": 433
+        }
+    ]
+}

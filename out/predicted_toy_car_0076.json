@@ -1,0 +1,12 @@
+{
+    "predictions": [
+        {
+            "class": "car",
+            "prob": 0.895584,
+            "left": 796,
+            "top": 407,
+            "right": 1076,
+            "bot": 584
+        }
+    ]
+}
