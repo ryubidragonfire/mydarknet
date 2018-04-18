@@ -6,7 +6,7 @@ The following are tested on AZURE LINUX DLVM, with YOLOV3
 ref: https://github.com/AlexeyAB/darknet
 
 ### 1. compile in linux
-- git clone https://github.com/AlexeyAB/darknet.git
+- git clone https://github.com/ryubidragonfire/mydarknet
 
 - In `darknet\Makefile`, change:
 
@@ -47,11 +47,18 @@ make
   
   `./darknet detector demo build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 data/toy-car.mp4 -out_filename data/predicted-toy-car.avi`
   
-##### 2.2.1. View .avi using VLC
+##### 2.2.1. View .avi using [VLC](https://www.videolan.org/vlc/download-ubuntu.html)
 - to install
 
 ```
 % sudo apt-get update
 % sudo apt-get install vlc browser-plugin-vlc
 ```
-  
+##### 2.2.2. View .avi using [SMPlayer](https://www.smplayer.info/en/downloads)
+- to install
+
+```
+sudo add-apt-repository ppa:rvm/smplayer 
+sudo apt-get update 
+sudo apt-get install smplayer smplayer-themes smplayer-skins 
+```
