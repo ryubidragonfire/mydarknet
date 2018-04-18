@@ -6,7 +6,7 @@ The following are tested on AZURE LINUX DLVM, with YOLOV3
 ref: https://github.com/AlexeyAB/darknet
 
 ### 1. compile in linux
-- git clone https://github.com/AlexeyAB/darknet.git
+- git clone https://github.com/ryubidragonfire/mydarknet
 
 - In `darknet\Makefile`, change:
 
