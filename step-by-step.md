@@ -1,6 +1,8 @@
 # WHAT's THE DIFFERENCE?
 This is largely the same as [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet).
 
+This is a record of my experience. Please let me know if you spotted any mistakes/anomallies :) !
+
 Additions: 
 - facilities to write out predictions results on an image and a video to `.txt` and `.json`. 
     - Modifications are recorded in [write-out-predictions.md](https://github.com/ryubidragonfire/mydarknet/blob/master/write-out-predictions.md).
