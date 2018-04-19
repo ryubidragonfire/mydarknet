@@ -1,5 +1,5 @@
 # Modifications
-## Write out bboxes, predicted class, probablities for an image
+## 1. Write out bboxes, predicted class, probablities for an image
  
 - `src/image.c` line 203 
 
@@ -43,7 +43,7 @@ car 0.649124 736 300 1026 481
 }
 ```
  
-## Write out bboxes, predicted class, probablities for a video
+## 2. Write out bboxes, predicted class, probablities for a video
 - `src/image.c` line 346 `ifdef OPENCV`
 
 Based on `void draw_detections_cv_v3(IplImage* show_img, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)`, the following are created:
@@ -71,6 +71,12 @@ The original code above only writes out frame `#2` to `#(lastframe-2)`. This can
 
 The added function `draw_detections_cv_v3_write_to_txt()` writes out `#1` to `#lastframe`
 
+## 3. Added `jWrite.c` and `jWrite.h`
+`JWrite` is used for outputing prediction results in json format.
+
+- in `Makefile`, line 90, 
+
+`OBJ=http_stream.o gemm.o utils.o cuda.o convolutional_layer.o list.o image.o activations.o im2col.o col2im.o blas.o crop_layer.o dropout_layer.o maxpool_layer.o softmax_layer.o data.o matrix.o network.o connected_layer.o cost_layer.o parser.o option_list.o darknet.o detection_layer.o captcha.o route_layer.o writing.o box.o nightmare.o normalization_layer.o avgpool_layer.o coco.o dice.o yolo.o detector.o layer.o compare.o classifier.o local_layer.o swag.o shortcut_layer.o activation_layer.o rnn_layer.o gru_layer.o rnn.o rnn_vid.o crnn_layer.o demo.o tag.o cifar.o go.o batchnorm_layer.o art.o region_layer.o reorg_layer.o reorg_old_layer.o super.o voxel.o tree.o yolo_layer.o upsample_layer.o` **`jWrite.o`**
 
 # To Do
 ## Log file for training and validation loss
