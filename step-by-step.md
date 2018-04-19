@@ -81,7 +81,7 @@ Ref: https://github.com/AlexeyAB/darknet#using-yolo9000
 
 Detection of 9418 objects:
 
-#### 5.1. Using YOLO9000
+#### 5.1. Using YOLO9000 (unsure about whether this is V2 or V3, most likely V2)
 
 - get `yolo9000.weights` from http://pjreddie.com/media/files/yolo9000.weights
 
