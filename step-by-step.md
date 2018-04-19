@@ -62,3 +62,6 @@ sudo add-apt-repository ppa:rvm/smplayer
 sudo apt-get update 
 sudo apt-get install smplayer smplayer-themes smplayer-skins 
 ```
+
+## ISSUES & SOLUTIONS
+Issues and solutions (where possible) are recorded [here](https://gist.github.com/ryubidragonfire/a70bc052af897179cb3670aa320e3d30).
