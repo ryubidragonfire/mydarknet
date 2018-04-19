@@ -62,6 +62,8 @@ sudo add-apt-repository ppa:rvm/smplayer
 sudo apt-get update 
 sudo apt-get install smplayer smplayer-themes smplayer-skins 
 ```
+### 3. Transfer-learning: Train with your own data with different classes
+See [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet#how-to-train-to-detect-your-custom-objects)
 
 ## ISSUES & SOLUTIONS
 Issues and solutions (where possible) are recorded [here](https://gist.github.com/ryubidragonfire/a70bc052af897179cb3670aa320e3d30).
