@@ -1,7 +1,7 @@
 # WHAT's THE DIFFERENCE?
 This is largely the same as [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet).
 
-Additions: facilities to write out predictions results on an image and a video to `.txt` and `.json`. Modifications are recorded [write-out-predictions.md](https://github.com/ryubidragonfire/mydarknet/blob/master/write-out-predictions.md)
+Additions: facilities to write out predictions results on an image and a video to `.txt` and `.json`. Modifications are recorded in [write-out-predictions.md](https://github.com/ryubidragonfire/mydarknet/blob/master/write-out-predictions.md)
 
 # QUICK START FOR USING DARKNET's YOLOV3
 The following are tested on AZURE LINUX DLVM, with YOLOV3
