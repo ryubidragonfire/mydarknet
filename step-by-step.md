@@ -79,6 +79,9 @@ see [AlexeyAB/Yolo_mark](https://github.com/AlexeyAB/Yolo_mark)
 ## ISSUES & SOLUTIONS
 Issues and solutions (where possible) are recorded [here](https://gist.github.com/ryubidragonfire/a70bc052af897179cb3670aa320e3d30).
 
+## LINUX COMMANDS
+Commonly used linux commands can be found in my [gist](https://gist.github.com/ryubidragonfire/4cab2ac5731c96fcbdfd333bc758588e)
+
 ## Reference:
 - [Darknet](https://github.com/pjreddie/darknet/)
   - Neural Network in C, CUDA
