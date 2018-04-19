@@ -1,3 +1,7 @@
+# WHAT's THE DIFFERENCE?
+This is largely the same as [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet).
+Additions: facilities to write out predictions results on an image and a video to `.txt` and `.json`.
+
 # QUICK START FOR USING DARKNET's YOLOV3
 The following are tested on AZURE LINUX DLVM, with YOLOV3
 
