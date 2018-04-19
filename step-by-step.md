@@ -93,7 +93,16 @@ Detection of 9418 objects:
     - set `labels` to path to `9k.labels` (9418 labels of objects: https://raw.githubusercontent.com/AlexeyAB/darknet/master/build/darknet/x64/data/9k.labels)
     - set `names` to path to `9k.names` (9418 names of objects: https://raw.githubusercontent.com/AlexeyAB/darknet/master/build/darknet/x64/data/9k.names)
     - set `map` to path to `inet9k.map` (map 200 categories from ImageNet to WordTree `9k.tree`: https://raw.githubusercontent.com/AlexeyAB/darknet/master/build/darknet/x64/data/inet9k.map)
-    - set `train` to path to `your-text-file-that-contain-a-list-of-training-images.txt`, **if you want to train**.
+    
+#### 5.1. Fine-tuning YOLO9000 with your own data using same class labels as YOLO9000
+
+- Use [Yolo-mark](https://github.com/AlexeyAB/Yolo_mark) to annotate your images, together with the [`9k.names`](https://raw.githubusercontent.com/AlexeyAB/darknet/master/build/darknet/x64/data/9k.names)
+
+- set `train` to path to `your-text-file-that-contain-a-list-of-training-images.txt`.
+
+#### 5.2. Transfer-learn YOLO9000 with your own data using different class labels from YOLO9000
+
+- I have no idea yet. Please comment if you would like to share.
 
 ## ISSUES & SOLUTIONS
 Issues and solutions (where possible) are recorded [here](https://gist.github.com/ryubidragonfire/a70bc052af897179cb3670aa320e3d30).
