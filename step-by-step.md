@@ -65,3 +65,33 @@ sudo apt-get install smplayer smplayer-themes smplayer-skins
 
 ## ISSUES & SOLUTIONS
 Issues and solutions (where possible) are recorded [here](https://gist.github.com/ryubidragonfire/a70bc052af897179cb3670aa320e3d30).
+
+## Reference:
+- [Darknet](https://github.com/pjreddie/darknet/)
+  - Neural Network in C, CUDA
+- [yad2k](https://github.com/allanzelener/YAD2K)
+  - 90% Keras, 10% Tensorflow
+  - convert a Darnet Yolov2 model to a Keras model, using Darknet's xxx.cfg and xxx.weights
+- https://github.com/experiencor
+  - yolo2 in keras
+  - yolo3 in keras
+- https://github.com/lhk/object_detection/blob/master/yolov2/
+  - yolov2 with yad2k
+- [AlexeyAB](https://github.com/AlexeyAB/darknet)
+  - train with your own data and classes, using Darknet
+  - [Yolo-mark](https://github.com/AlexeyAB/Yolo_mark)
+    - annotation for yolov2, yolov3  
+  - Yolo9000 .cfg, .weights
+- [吳恩達](https://github.com/enggen/Deep-Learning-Coursera/tree/master/Convolutional%20Neural%20Networks/Week3/Car%20detection%20for%20Autonomous%20Driving)
+  - Intersection of Union, Non-maxima supression
+  - Display
+- [how-to-train-yolov2-to-detect-custom-objects](https://timebutt.github.io/static/how-to-train-yolov2-to-detect-custom-objects/) 
+- https://github.com/datlife/yolov2
+
+### Reference - object tracking:
+- [Re3
+: Real-Time Recurrent Regression Networks for
+Visual Tracking of Generic Objects](https://arxiv.org/pdf/1705.06368.pdf)
+ 
+### Reference - transfer learning:
+- [cs231n: Transfer Learning](http://cs231n.github.io/transfer-learning/) 
