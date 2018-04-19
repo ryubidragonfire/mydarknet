@@ -1,4 +1,4 @@
-# Modifications for V3
+# Modifications
 ## Write out bboxes, predicted class, probablities for an image
  
 - `src/image.c` line 203 
