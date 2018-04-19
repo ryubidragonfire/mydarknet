@@ -76,6 +76,25 @@ See [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet#how-to-train-to-detec
 ### 4. Labelling your own data
 see [AlexeyAB/Yolo_mark](https://github.com/AlexeyAB/Yolo_mark)
 
+### 5. YOLO9000
+Ref: https://github.com/AlexeyAB/darknet#using-yolo9000
+
+Detection of 9418 objects:
+
+#### 5.1. Using YOLO9000
+
+- get `yolo9000.weights` from http://pjreddie.com/media/files/yolo9000.weights
+
+- in `yolo9000.cfg`, the last 2 lines:
+    - set `tree` to path to `9k.tree` , can be found at https://raw.githubusercontent.com/AlexeyAB/darknet/master/build/darknet/x64/data/9k.tree
+    - set `map` to path to `coco9k.map` , can be found at https://raw.githubusercontent.com/AlexeyAB/darknet/master/build/darknet/x64/data/coco9k.map
+
+- in `combine9k.data`, which can be found at https://raw.githubusercontent.com/AlexeyAB/darknet/master/build/darknet/x64/data/combine9k.data
+    - set `labels` to path to `9k.labels` (9418 labels of objects: https://raw.githubusercontent.com/AlexeyAB/darknet/master/build/darknet/x64/data/9k.labels)
+    - set `names` to path to `9k.names` (9418 names of objects: https://raw.githubusercontent.com/AlexeyAB/darknet/master/build/darknet/x64/data/9k.names)
+    - set `map` to path to `inet9k.map` (map 200 categories from ImageNet to WordTree `9k.tree`: https://raw.githubusercontent.com/AlexeyAB/darknet/master/build/darknet/x64/data/inet9k.map)
+    - set `train` to path to `your-text-file-that-contain-a-list-of-training-image.txt`, (change path to your `combine9k.train.list`): 
+
 ## ISSUES & SOLUTIONS
 Issues and solutions (where possible) are recorded [here](https://gist.github.com/ryubidragonfire/a70bc052af897179cb3670aa320e3d30).
 
