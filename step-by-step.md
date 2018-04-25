@@ -8,6 +8,12 @@ Additions:
     - Modifications are recorded in [write-out-predictions.md](https://github.com/ryubidragonfire/mydarknet/blob/master/write-out-predictions.md).
     - Output format can be found in [write-out-predictions.md](https://github.com/ryubidragonfire/mydarknet/blob/master/write-out-predictions.md).
 
+# YOU MAY ALSO NEED
+## Connecting from Windows to Linux VM 
+- [Putty](https://support.rackspace.com/how-to/connecting-to-linux-from-windows-by-using-putty/) to access Linux VM from window through command line. And/Or,
+- [X2Go](https://docs.microsoft.com/en-us/azure/machine-learning/data-science-virtual-machine/linux-dsvm-intro#how-to-access-the-linux-data-science-virtual-machine) to access a graphical desktop of the Linux VM.
+
+
 # QUICK START FOR USING DARKNET's YOLOV3
 The following are tested on AZURE LINUX DLVM, with YOLOV3
 
