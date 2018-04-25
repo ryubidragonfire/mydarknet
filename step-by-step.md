@@ -39,6 +39,8 @@ make
 
 #### 2.1. Detect on a single image
 
+In `darknet\`,
+
 `./darknet detector test build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg  build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 build/darknet/x64/data/dog.jpg`
 
 - to turn off display window
@@ -46,6 +48,8 @@ make
   `./darknet detector test build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg  build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 build/darknet/x64/data/dog.jpg -dont_show`
 
 #### 2.2. Detect on a video
+
+In `darknet\`,
 
 `./darknet detector demo build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 data/toy-car.mp4`
 
