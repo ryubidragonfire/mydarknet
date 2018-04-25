@@ -22,6 +22,14 @@ Additions:
         
 - from `X2Go`, could make your life easier
 
+## Save `.mp4` to individual frames
+- install `ffmpeg`
+
+`sudo apt install ffmpeg`
+
+- do
+`ffmpeg -i your-folder/your-video.mp4 -vf fps=1 your-video%04d.jpg -hide_banner `
+
 # QUICK START FOR USING DARKNET's YOLOV3
 The following are tested on AZURE LINUX DLVM, with YOLOV3
 
