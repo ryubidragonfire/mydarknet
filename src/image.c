@@ -4,6 +4,7 @@
 #include "cuda.h"
 #include <stdio.h>
 #include <math.h>
+#include <libgen.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -304,19 +305,25 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
     printf("FILE CLOSE\n");
 }
 
-void draw_detections_v3_write_to_json(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
+void draw_detections_v3_write_to_json(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes, char *input)
 {
 	int i, j;
     char buffer[1024];
 	unsigned int buflen= 1024;
 	int err;
     struct jWriteControl jwc;
-    
-    printf("i:%d j:%d num:%d\n", i, j, num);
+    char jsonfname[1024];
+
+    //printf("i:%d j:%d num:%d\n", i, j, num);
+
+    // Get partial of image filename
+    //printf("input : %s \n", input);
+    strncpy(jsonfname, input, strlen(input)-4);
+    strcat(jsonfname, "_predicted.json");
     
     // Open a file to write out
-    printf("OPEN FILE \n");
-    FILE *f = fopen("./out/output.json", "w");
+    printf("OPEN FILE : %s \n", jsonfname);
+    FILE *f = fopen(jsonfname, "w");
     if (f == NULL){
         printf("Error opening output file!\n");
         exit(1);

@@ -1034,10 +1034,13 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
     float nms=.45;	// 0.4F
     while(1){
         if(filename){
+			printf("filename: %s\n", filename);
             strncpy(input, filename, 256);
+			printf("iput: %s\n", input);
 			if (input[strlen(input) - 1] == 0x0d) input[strlen(input) - 1] = 0;
         } else {
             printf("Enter Image Path: ");
+			// printf("input : %s \n", input); input is image filename listed in the file
             fflush(stdout);
             input = fgets(input, 256, stdin);
             if(!input) return;
@@ -1065,7 +1068,7 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
 		detection *dets = get_network_boxes(&net, im.w, im.h, thresh, hier_thresh, 0, 1, &nboxes, letterbox);
 		if (nms) do_nms_sort(dets, nboxes, l.classes, nms);
 		//draw_detections_v3(im, dets, nboxes, thresh, names, alphabet, l.classes);
-		draw_detections_v3_write_to_json(im, dets, nboxes, thresh, names, alphabet, l.classes);
+		draw_detections_v3_write_to_json(im, dets, nboxes, thresh, names, alphabet, l.classes, input);
 		free_detections(dets, nboxes);
         save_image(im, "predictions");
 		if (!dont_show) {
