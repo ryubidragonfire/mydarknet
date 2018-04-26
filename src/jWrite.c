@@ -7,7 +7,6 @@
 //
 // TonyWilk, Mar 2015
 //
-#define _CRT_SECURE_NO_WARNINGS		// stop complaining about deprecated functions
 
 #include <stddef.h>
 #include <stdio.h>

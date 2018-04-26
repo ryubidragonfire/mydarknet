@@ -306,7 +306,7 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
 
 void draw_detections_v3_write_to_json(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
 {
-	int i, j;
+	int i=0, j=0;
     char buffer[1024];
 	unsigned int buflen= 1024;
 	int err;
