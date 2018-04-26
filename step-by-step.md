@@ -89,6 +89,9 @@ In `darknet\`,
   
   `./darknet detector demo build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 data/toy-car.mp4 -out_filename data/predicted-toy-car.avi`
   
+- to save individual frame
+  `./darknet detector demo build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 data/toy-car.mp4 -out_filename data/predicted-toy-car.avi -prefix your-output-frames-prefix`
+  
 ##### 2.2.1. View .avi using [VLC](https://www.videolan.org/vlc/download-ubuntu.html)
 - to install
 
