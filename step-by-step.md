@@ -98,6 +98,12 @@ sudo add-apt-repository ppa:rvm/smplayer
 sudo apt-get update 
 sudo apt-get install smplayer smplayer-themes smplayer-skins 
 ```
+
+#### 2.3. Detect on a list of images
+` ./darknet detector test build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 <build/darknet/x64/data/test-images.txt> ./out/result.txt -dont_show` 
+
+In this case, `./out/result.txt` can be ignored. Individual output files xxx.json can be found in the same directory where the test images are. 
+
 ### 3. Transfer-learning: Train with your own data with different classes
 See [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet#how-to-train-to-detect-your-custom-objects)
 
