@@ -305,7 +305,7 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
     printf("FILE CLOSE\n");
 }
 
-void draw_detections_v3_write_to_json(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes, char *input)
+void draw_detections_v3_write_to_json(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes, char *outfname)
 {
 	int i, j;
     char buffer[1024];
@@ -318,9 +318,11 @@ void draw_detections_v3_write_to_json(image im, detection *dets, int num, float 
 
     // Get partial of image filename
     //printf("input : %s \n", input);
-    strncpy(jsonfname, input, strlen(input)-4);
-    strcat(jsonfname, "_predicted.json");
-    
+  //  strncpy(jsonfname, input, strlen(input)-4);
+    //strcat(jsonfname, "_predicted.json");
+
+    strcpy(jsonfname, outfname);
+    strcat(jsonfname, ".json");
     // Open a file to write out
     printf("OPEN FILE : %s \n", jsonfname);
     FILE *f = fopen(jsonfname, "w");
@@ -420,7 +422,7 @@ void draw_detections_v3_write_to_json(image im, detection *dets, int num, float 
     err= jwClose(); // close jWrite object
     fprintf(f, "%s\n", buffer);
     fclose(f);
-    printf("FILE CLOSE\n");
+    //printf("FILE CLOSE\n");
 }
 
 void draw_detections(image im, int num, float thresh, box *boxes, float **probs, char **names, image **alphabet, int classes)
