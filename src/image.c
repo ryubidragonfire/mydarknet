@@ -4,7 +4,7 @@
 #include "cuda.h"
 #include <stdio.h>
 #include <math.h>
-#include <libgen.h>
+//#include <libgen.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
