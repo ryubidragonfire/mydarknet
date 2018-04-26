@@ -1032,15 +1032,19 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
     char *input = buff;
     int j;
     float nms=.45;	// 0.4F
-    while(1){
-        if(filename){
+	
+	while(1){
+        if(filename){ //for a single image
+			printf("filename: %s\n", filename);
             strncpy(input, filename, 256);
+			//printf("input: %s\n", input);
 			if (input[strlen(input) - 1] == 0x0d) input[strlen(input) - 1] = 0;
-        } else {
-            printf("Enter Image Path: ");
-            fflush(stdout);
+        } else { //for a list of images
+            //printf("Enter Image Path: ");
+			fflush(stdout);
             input = fgets(input, 256, stdin);
-            if(!input) return;
+			if(!input) return;
+			//printf("input : %s \n", input); 
             strtok(input, "\n");
         }
         image im = load_image_color(input,0,0);
@@ -1065,11 +1069,18 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
 		detection *dets = get_network_boxes(&net, im.w, im.h, thresh, hier_thresh, 0, 1, &nboxes, letterbox);
 		if (nms) do_nms_sort(dets, nboxes, l.classes, nms);
 		//draw_detections_v3(im, dets, nboxes, thresh, names, alphabet, l.classes);
-		draw_detections_v3_write_to_json(im, dets, nboxes, thresh, names, alphabet, l.classes);
+		
+		// prepare output filename
+		char outfname[256] = {0}; // initialise 
+		strncpy(outfname, input, strlen(input)-4);
+		strcat(outfname, "-predicted");
+			
+		draw_detections_v3_write_to_json(im, dets, nboxes, thresh, names, alphabet, l.classes, outfname);
 		free_detections(dets, nboxes);
-        save_image(im, "predictions");
+
+        save_image(im, outfname);
 		if (!dont_show) {
-			show_image(im, "predictions");
+			show_image(im, outfname);
 		}
 
         free_image(im);

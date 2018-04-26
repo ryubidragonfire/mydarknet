@@ -68,6 +68,12 @@ In `darknet\`,
 - to turn off display window
   
   `./darknet detector test build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg  build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 build/darknet/x64/data/dog.jpg -dont_show`
+  
+- running either of the command above will produce:
+
+    - predicted result in `.json`, e.g. `build/darknet/x64/data/dog-predicted.json`
+    
+    - predicted result in `.jpg`, e.g. `build/darknet/x64/data/dog-predicted.jpg`
 
 #### 2.2. Detect on a video
 
@@ -98,8 +104,23 @@ sudo add-apt-repository ppa:rvm/smplayer
 sudo apt-get update 
 sudo apt-get install smplayer smplayer-themes smplayer-skins 
 ```
+
+#### 2.3. Detect on a list of images
+` ./darknet detector test build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 <build/darknet/x64/data/test-images.txt> ./out/result.txt -dont_show` 
+
+In this case, `./out/result.txt` can be ignored. Individual output files xxx.json can be found in the same directory where the test images are. 
+
+- running the command above will produce:
+
+    - predicted result for each of the image in `test-images.txt` in `.json`, e.g. `build/darknet/x64/data/dog-predicted.json`
+    
+    - predicted result for each of the image in `test-images.txt` in `.jpg`, e.g. `build/darknet/x64/data/dog-predicted.jpg`
+
 ### 3. Transfer-learning: Train with your own data with different classes
 See [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet#how-to-train-to-detect-your-custom-objects)
+
+#### 3.1. Potential Issues: `CUDA Error: out of memory`
+see [solution](https://gist.github.com/ryubidragonfire/a70bc052af897179cb3670aa320e3d30#cuda-error-out-of-memory)
 
 ### 4. Labelling your own data
 see [AlexeyAB/Yolo_mark](https://github.com/AlexeyAB/Yolo_mark)
