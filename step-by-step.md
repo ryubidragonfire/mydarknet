@@ -119,6 +119,9 @@ In this case, `./out/result.txt` can be ignored. Individual output files xxx.jso
 ### 3. Transfer-learning: Train with your own data with different classes
 See [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet#how-to-train-to-detect-your-custom-objects)
 
+#### 3.1. Potential Issues: `CUDA Error: out of memory`
+see [solution](https://gist.github.com/ryubidragonfire/a70bc052af897179cb3670aa320e3d30#cuda-error-out-of-memory)
+
 ### 4. Labelling your own data
 see [AlexeyAB/Yolo_mark](https://github.com/AlexeyAB/Yolo_mark)
 
