@@ -68,6 +68,12 @@ In `darknet\`,
 - to turn off display window
   
   `./darknet detector test build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg  build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 build/darknet/x64/data/dog.jpg -dont_show`
+  
+- running either of the command above will produce:
+
+    - predicted result in `.json`, e.g. `build/darknet/x64/data/dog-predicted.json`
+    
+    - predicted result in `.jpg`, e.g. `build/darknet/x64/data/dog-predicted.jpg`
 
 #### 2.2. Detect on a video
 
