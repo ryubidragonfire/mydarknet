@@ -110,6 +110,12 @@ sudo apt-get install smplayer smplayer-themes smplayer-skins
 
 In this case, `./out/result.txt` can be ignored. Individual output files xxx.json can be found in the same directory where the test images are. 
 
+- running the command above will produce:
+
+    - predicted result for each of the image in `test-images.txt` in `.json`, e.g. `build/darknet/x64/data/dog-predicted.json`
+    
+    - predicted result for each of the image in `test-images.txt` in `.jpg`, e.g. `build/darknet/x64/data/dog-predicted.jpg`
+
 ### 3. Transfer-learning: Train with your own data with different classes
 See [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet#how-to-train-to-detect-your-custom-objects)
 
