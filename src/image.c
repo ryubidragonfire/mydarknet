@@ -324,7 +324,7 @@ void draw_detections_v3_write_to_json(image im, detection *dets, int num, float 
     strcpy(jsonfname, outfname);
     strcat(jsonfname, ".json");
     // Open a file to write out
-    printf("OPEN FILE : %s \n", jsonfname);
+    //printf("OPEN FILE : %s \n", jsonfname);
     FILE *f = fopen(jsonfname, "w");
     if (f == NULL){
         printf("Error opening output file!\n");
