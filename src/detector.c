@@ -963,7 +963,7 @@ void calc_anchors(char *datacfg, int num_of_clusters, int width, int height, int
 	printf("anchors = ");
 	for (i = 0; i < num_of_clusters; ++i) {
 		sprintf(buff, "%2.4f,%2.4f", centers->data.fl[i * 2], centers->data.fl[i * 2 + 1]);
-		printf("%s", buff);
+		//printf("%s", buff);
 		fwrite(buff, sizeof(char), strlen(buff), fw);
 		if (i + 1 < num_of_clusters) {
 			fwrite(", ", sizeof(char), 2, fw);

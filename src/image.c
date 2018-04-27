@@ -692,23 +692,30 @@ void draw_detections_cv_v3_write_to_txt(IplImage* show_img, detection *dets, int
     printf("FILE CLOSE\n");
 }
 
-void draw_detections_cv_v3_write_to_json(IplImage* show_img, detection *dets, int num, float thresh, char **names, image **alphabet, int classes)
+void draw_detections_cv_v3_write_to_json(IplImage* show_img, detection *dets, int num, float thresh, char **names, image **alphabet, int classes, char *prefix)
 {
-    char outfname[128];
+    //char outfname[128];
 	int i, j; 
 	char buffer[1024];
 	unsigned int buflen= 1024;
 	int err;
     struct jWriteControl jwc;
+    char jsonfname[128];
+    char posfix[8];
     
+
     if (!show_img) return;
     //printf("global_video_frame_number :%d \n", global_video_frame_number);
-    printf("FILE OPEN\n");
+    //printf("FILE OPEN\n");
     //printf("i:%d j:%d num:%d\n", i, j, num);
-    snprintf(outfname, 128, "./out/predicted_toy_car_%04d", global_video_frame_number);
-    strcat(outfname, ".json");
-    printf("outfname :%s \n", outfname);
-    FILE *f = fopen(outfname, "w");
+    strcpy(jsonfname, prefix);
+    //printf("jsonfname :%s \n", jsonfname);
+
+    snprintf(posfix, 128, "_%08d.json", global_video_frame_number);
+    strcat(jsonfname, posfix);
+    //printf("jsonfname :%s \n", jsonfname);
+
+    FILE *f = fopen(jsonfname, "w");
     if (f == NULL){
         printf("Error opening output file!\n");
         exit(1);
@@ -817,7 +824,7 @@ void draw_detections_cv_v3_write_to_json(IplImage* show_img, detection *dets, in
     err= jwClose(); // close jWrite object
     fprintf(f, "%s\n", buffer);
     fclose(f);
-    printf("FILE CLOSE\n");
+    //printf("FILE CLOSE\n");
 }
 
 void draw_detections_cv(IplImage* show_img, int num, float thresh, box *boxes, float **probs, char **names, image **alphabet, int classes)

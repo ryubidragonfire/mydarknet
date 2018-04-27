@@ -49,11 +49,12 @@ static int demo_index = 0;
 static image images[FRAMES];
 static IplImage* ipl_images[FRAMES];
 static float *avg;
+static *out_prefix;
 
 void draw_detections_cv(IplImage* show_img, int num, float thresh, box *boxes, float **probs, char **names, image **alphabet, int classes);
 void draw_detections_cv_v3(IplImage* show_img, detection *dets, int num, float thresh, char **names, image **alphabet, int classes);
 void draw_detections_cv_v3_write_to_txt(IplImage* show_img, detection *dets, int num, float thresh, char **names, image **alphabet, int classes);
-void draw_detections_cv_v3_write_to_json(IplImage* show_img, detection *dets, int num, float thresh, char **names, image **alphabet, int classes);
+void draw_detections_cv_v3_write_to_json(IplImage* show_img, detection *dets, int num, float thresh, char **names, image **alphabet, int classes, char *prefix);
 void show_image_cv_ipl(IplImage *disp, const char *name);
 image get_image_from_stream_resize(CvCapture *cap, int w, int h, IplImage** in_img, int use_webcam);
 IplImage* in_img;
@@ -121,7 +122,7 @@ void *detect_in_thread(void *ptr)
     //draw_detections(det, l.w*l.h*l.n, demo_thresh, boxes, probs, demo_names, demo_alphabet, demo_classes);
     //draw_detections_cv_v3(det_img, dets, nboxes, demo_thresh, demo_names, demo_alphabet, demo_classes);
 	//draw_detections_cv_v3_write_to_txt(det_img, dets, nboxes, demo_thresh, demo_names, demo_alphabet, demo_classes);
-	draw_detections_cv_v3_write_to_json(det_img, dets, nboxes, demo_thresh, demo_names, demo_alphabet, demo_classes);
+	draw_detections_cv_v3_write_to_json(det_img, dets, nboxes, demo_thresh, demo_names, demo_alphabet, demo_classes, out_prefix);
     //printf("global_video_frame_number :%d\n", global_video_frame_number);
     global_video_frame_number = global_video_frame_number + 1;
     //draw_detections_cv(det_img, l.w*l.h*l.n, demo_thresh, boxes, probs, demo_names, demo_alphabet, demo_classes);
@@ -150,6 +151,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
     demo_alphabet = alphabet;
     demo_classes = classes;
     demo_thresh = thresh;
+    out_prefix = prefix;
     printf("Demo\n");
     net = parse_network_cfg_custom(cfgfile, 1);
     if(weightfile){
@@ -262,6 +264,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
             }else{
                 char buff[256];
                 sprintf(buff, "%s_%08d", prefix, count);
+                printf("buff: %s\n", buff);
                 save_image(disp, buff);
             }
 
