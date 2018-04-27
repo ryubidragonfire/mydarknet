@@ -89,6 +89,9 @@ In `darknet\`,
   
   `./darknet detector demo build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 data/toy-car.mp4 -out_filename data/predicted-toy-car.avi`
   
+- to save individual frame
+  `./darknet detector demo build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 data/toy-car.mp4 -out_filename data/predicted-toy-car.avi -prefix your-output-frames-prefix`
+  
 ##### 2.2.1. View .avi using [VLC](https://www.videolan.org/vlc/download-ubuntu.html)
 - to install
 
@@ -118,6 +121,9 @@ In this case, `./out/result.txt` can be ignored. Individual output files xxx.jso
 
 ### 3. Transfer-learning: Train with your own data with different classes
 See [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet#how-to-train-to-detect-your-custom-objects)
+
+#### 3.1. Potential Issues: `CUDA Error: out of memory`
+see [solution](https://gist.github.com/ryubidragonfire/a70bc052af897179cb3670aa320e3d30#cuda-error-out-of-memory)
 
 ### 4. Labelling your own data
 see [AlexeyAB/Yolo_mark](https://github.com/AlexeyAB/Yolo_mark)
