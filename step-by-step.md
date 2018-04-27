@@ -126,7 +126,8 @@ See [AlexeyAB/darknet](https://github.com/AlexeyAB/darknet#how-to-train-to-detec
 see [solution](https://gist.github.com/ryubidragonfire/a70bc052af897179cb3670aa320e3d30#cuda-error-out-of-memory)
 
 ### 4. Labelling your own data
-see [AlexeyAB/Yolo_mark](https://github.com/AlexeyAB/Yolo_mark)
+- [AlexeyAB/Yolo_mark](https://github.com/AlexeyAB/Yolo_mark)
+- [VOTT](https://github.com/Microsoft/VoTT)
 
 ### 5. YOLO9000
 Ref: https://github.com/AlexeyAB/darknet#using-yolo9000
