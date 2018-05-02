@@ -5,6 +5,7 @@
 *.png
 *.jpg
 *.so
+*.weights
 out/
 backup/
 mnist/
