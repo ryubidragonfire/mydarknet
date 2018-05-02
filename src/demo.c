@@ -264,7 +264,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
             }else{
                 char buff[256];
                 sprintf(buff, "%s_%08d", prefix, count);
-                printf("buff: %s\n", buff);
+                //printf("buff: %s\n", buff);
                 save_image(disp, buff);
             }
 
