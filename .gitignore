@@ -5,6 +5,7 @@
 *.png
 *.jpg
 *.so
+out/
 backup/
 mnist/
 data/
