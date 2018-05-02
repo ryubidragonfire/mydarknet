@@ -89,7 +89,7 @@ In `darknet\`,
   
   `./darknet detector demo build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 data/toy-car.mp4 -out_filename data/predicted-toy-car.avi`
   
-- to save individual frame
+- to save individual frame and individual output in json (TODO, to switch off the 'save individual frame')
   `./darknet detector demo build/darknet/x64/data/coco.data build/darknet/x64/yolov3.cfg build/darknet/x64/yolov3.weights -i 0 -thresh 0.25 data/toy-car.mp4 -out_filename data/predicted-toy-car.avi -prefix your-output-frames-prefix`
   
 ##### 2.2.1. View .avi using [VLC](https://www.videolan.org/vlc/download-ubuntu.html)
@@ -129,7 +129,21 @@ see [solution](https://gist.github.com/ryubidragonfire/a70bc052af897179cb3670aa3
 - [AlexeyAB/Yolo_mark](https://github.com/AlexeyAB/Yolo_mark)
 - [VOTT](https://github.com/Microsoft/VoTT)
 
-### 5. YOLO9000
+### 5. Output Mean Average Precision (mPA)
+Use this command:
+`./darknet detector map /dlvmdata/darknet/car_hellicopter/yolov3/obj.data /dlvmdata/darknet/car_hellicopter/yolov3/yolov3-obj.cfg /dlvmdata/darknet/car_hellicopter/yolov3/weights/yolov3-obj_11400.weights`
+
+Sample output on screen:
+```
+detections_count = 219, unique_truth_count = 176  
+class_id = 0, name = car,        ap = 67.73 % 
+class_id = 1, name = hellicopter, 	 ap = 99.92 % 
+for thresh = 0.25, precision = 0.82, recall = 0.98, F1-score = 0.90 
+for thresh = 0.25, TP = 173, FP = 37, FN = 3, average IoU = 69.37 % 
+mean average precision (mAP) = 0.838210, or 83.82 % 
+```
+
+### 6. YOLO9000
 Ref: https://github.com/AlexeyAB/darknet#using-yolo9000
 
 Detection of 9418 objects:
