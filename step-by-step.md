@@ -129,7 +129,8 @@ see [solution](https://gist.github.com/ryubidragonfire/a70bc052af897179cb3670aa3
 - [AlexeyAB/Yolo_mark](https://github.com/AlexeyAB/Yolo_mark)
 - [VOTT](https://github.com/Microsoft/VoTT)
 
-### 5. Output Mean Average Precision (mPA)
+### 5. Performance Evaluation
+#### 5.1. Output Mean Average Precision (mPA)
 Use this command:
 `./darknet detector map /dlvmdata/darknet/car_hellicopter/yolov3/obj.data /dlvmdata/darknet/car_hellicopter/yolov3/yolov3-obj.cfg /dlvmdata/darknet/car_hellicopter/yolov3/weights/yolov3-obj_11400.weights`
 
@@ -142,6 +143,10 @@ for thresh = 0.25, precision = 0.82, recall = 0.98, F1-score = 0.90
 for thresh = 0.25, TP = 173, FP = 37, FN = 3, average IoU = 69.37 % 
 mean average precision (mAP) = 0.838210, or 83.82 % 
 ```
+#### 5.2. Output Intersection of Union (IoU)
+
+# model performance
+`./darknet detector recall /dlvmdata/darknet/car_hellicopter/yolov3/obj.data /dlvmdata/darknet/car_hellicopter/yolov3/yolov3-obj.cfg /dlvmdata/darknet/car_hellicopter/yolov3/weights/yolov3-obj_11400.weights`
 
 ### 6. YOLO9000
 Ref: https://github.com/AlexeyAB/darknet#using-yolo9000
